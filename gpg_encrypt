@@ -1,0 +1,41 @@
+#!/bin/bash
+usage="Anleitung: gpg_encrypt -i <dateiname>"
+
+input_file=""
+output_file=""
+
+while getopts "i:o:" options; do
+  case $options in
+    i) if [ -f $OPTARG  ] ;then
+         input_file=$OPTARG
+         echo "Eingabedatei: $OPTARG";
+       else
+         echo "Keine Eingabedatei";
+       fi;;
+    o) if [ "$OPTARG" != "" ] ;then
+         output_file=$OPTARG
+         echo "Ausgabedatei: $OPTARG";
+       else
+         echo "Keine Ausgabedatei angegeben.";
+       fi;;
+  esac
+done
+
+if [ "$input_file" == "" ] ;then
+  echo "Keine Eingabedatei angegeben, verwenden Sie die Option '-i dateiname' (ohne Anführungszeichen) um eine Eingabedatei hinzuzufuegen."
+fi
+
+if [ "$output_file" == "" ] ;then
+  heute=$(date)
+  filename=$(basename $input_file)
+  output_file="./pvs_files/${filename}.gpg";
+  echo "$heute :  Ausgabedatei: $output_file $name1";
+else
+  echo "Ausgabedatei: $output_file";
+fi
+
+# date +%d-%m-%Y
+
+echo "Executing command: gpg --output $output_file -r AD702CB0 --encrypt $input_file"
+gpg --batch --yes --output $output_file -r AD702CB0 --encrypt $input_file
+

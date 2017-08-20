@@ -1,0 +1,140 @@
+.btn:focus, .upload-btn:focus {
+  outline: 0 !important;
+}
+
+html,
+body {
+  background-color: #FFFFFF
+}
+
+header{
+  background:#FFFFFF;
+  color:#68757E;
+  /*border-bottom: #B8BDC1 3px outset;*/
+  min-height: 80px;
+    -webkit-box-shadow:0px 1px 1px #B8BDC1;
+     -moz-box-shadow:0px 1px 1px #B8BDC1;
+     box-shadow:0px 2px 2px #B8BDC1;
+  /* 4791D2 */
+}
+
+header a{
+  color:#68757E;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+header ul{
+  float: right;
+  margin:0;
+  padding:20px;
+}
+
+header li{
+  float: right;
+  display: inline;
+  padding: 0 20px 0px 20px;
+}
+
+header #branding {
+  float:left;
+}
+header #branding {
+  margin: 0;
+}
+
+header nav {
+
+}
+
+
+
+body {
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+}
+
+.row {
+  margin-top: 80px;
+}
+
+.upload-btn {
+  color: #ffffff;
+  background-color: #F89406;
+  border: none;
+}
+
+.upload-btn:hover,
+.upload-btn:focus,
+.upload-btn:active,
+.upload-btn.active {
+  color: #ffffff;
+  background-color: #FA8900;
+  border: none;
+}
+
+h4 {
+  padding-bottom: 30px;
+  color: #B8BDC1;
+}
+
+.glyphicon {
+  font-size: 5em;
+  color: #9CA3A9;
+}
+
+h2 {
+  margin-top: 15px;
+  color: #68757E;
+}
+
+.panel {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#upload-input {
+  display: none;
+}
+
+/*@media (min-width: 768px) {
+  .main-container {
+    width: 100%;
+  }
+}*/
+
+.left-container {
+
+}
+
+@media (min-width: 400px) {
+  .upload-container {
+  position: absolute;
+  left:50%;
+  top:25%;
+  margin: -50px 0 0 -75px;
+  }
+}
+
+footer {
+  padding: 20px;
+  /*margin-top:50px;*/
+  color:#68757E;
+  background:#FFFFFF;
+  text-align: right;
+  /*border-top: #FA8900 3px solid;*/
+  min-height: 70px;
+  font-size: 16px;
+  width: 100%;
+  bottom: 0;
+  position: fixed;
+  overflow:hidden;
+  -webkit-box-shadow:0px -1px 1px #B8BDC1;
+   -moz-box-shadow:0px -1px 1px #B8BDC1;
+   box-shadow:0px -2px 2px #B8BDC1;
+}
+
+header #bottom-container {
+  background: #000000
+}

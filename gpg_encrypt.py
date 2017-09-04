@@ -38,6 +38,9 @@ if not os.path.exists(input_file):
   
 output_file = "./pvs_files" + input_file + ".gpg"
 
+# The dummy argument name <gnupghome> 
+# might change for different versions or operating systems
+# it might be called <homedir>
 gpg = gnupg.GPG(gnupghome=home_dir)
 
 print("Executing command: gpg --output %s -r AD702CB0 --encrypt %s" % (output_file,input_file))

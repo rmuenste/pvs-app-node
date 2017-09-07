@@ -6,10 +6,23 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "RM",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.2",
-    "formidable": "^1.1.1"
-  }
+    "express": "^4.15.4",
+    "formidable": "^1.1.1",
+    "moment": "^2.18.1",
+    "nodemailer": "^4.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmuenste/pvs-app-node.git"
+  },
+  "keywords": [
+    "pvs"
+  ],
+  "bugs": {
+    "url": "https://github.com/rmuenste/pvs-app-node/issues"
+  },
+  "homepage": "https://github.com/rmuenste/pvs-app-node#readme"
 }

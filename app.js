@@ -60,12 +60,12 @@ app.post('/upload', function(req, res){
       }
 
       var smtpConfig = {
-        host: pw_obj['mail-server'],
-        port: pw_obj['mail-port'],
+        host: pw_obj['host'],
+        port: pw_obj['port'],
         secure: true, // use SSL
         auth: {
           user: pw_obj['user'],
-          pass: pw_obj['Password']
+          pass: pw_obj['pass']
         }
       };
 
@@ -86,7 +86,7 @@ app.post('/upload', function(req, res){
 
       transporter.sendMail(mailOptions, function(err, info){
         if(err){
-          console.log('Error');
+          console.log('Error: ' + err);
           res.status(500).send();
         }
         else {

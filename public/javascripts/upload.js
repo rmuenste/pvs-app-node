@@ -7,8 +7,6 @@ $('.upload-btn').on('click', function(){
 
 $('#upload-input').on('change', function(){
 
-  console.log('Change function... \n');
-
   var files = $(this).get(0).files;
 
   if (files.length > 0) {
@@ -43,7 +41,7 @@ $('#upload-input').on('change', function(){
       },
       error: function(data){
         console.log('Failed upload \n' + data);
-        alert("Fehler beim Senden!");
+        alert("Fehler beim Senden!\n" + JSON.stringify(data));
       },
       xhr: function() {
 
@@ -72,6 +70,5 @@ $('#upload-input').on('change', function(){
       return xhr;
       }
     });
-
   }
 });

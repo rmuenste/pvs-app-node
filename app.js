@@ -1,10 +1,15 @@
+// load the express module
 var express = require('express');
+
+// create an express object
 var app = express();
+
 var path = require('path');
 var formidable = require('formidable');
 var fs = require('fs');
 
-const nodemailer = require('nodemailer');
+var eh = require('./encrypthandler');
+
 const exec = require('child_process').exec;
 const moment = require('moment');
 
@@ -25,58 +30,35 @@ app.get('/', function(req, res) {
 
 //------------------------------------------------------------------------
 
-var encryptCallBack = function(error, stdout, stderr, res_obj, orig_name, out_name, mail_data) {
-
-  if (error !== null) {
-    console.log('The encryption of the file failed: ' + error);
-  }
-
-  var smtpConfig = {
-    host: mail_data['host'],
-    port: mail_data['port'],
-    secure: true, // use SSL
-    auth: {
-      user: mail_data['user'],
-      pass: mail_data['pass']
-    }
-  };
-
-  var transporter = nodemailer.createTransport(smtpConfig);
-
-  var mailOptions = {
-    from: mail_data['from'],
-    to: mail_data['to'],
-    subject: mail_data['subject'],
-    text: mail_data['body'], 
-    attachments: [
-    {
-      filename: orig_name + '.gpg',
-      path: out_name
-    }
-    ]
-  };
-
-  transporter.sendMail(mailOptions, function(err, info){
-    if(err){
-      console.log('Error: ' + err);
-      res_obj.status(500).send();
-    }
-    else {
-      console.log("SMTP: " + info.response);
-      console.log('Email sent');
-      res_obj.status(200).send();
-    }
-  });
-
-}
-
-//------------------------------------------------------------------------
-
+/*
+ * Express POST request handler for route /upload
+ */
 app.post('/upload', function(req, res){
 
-  var status_var = false;
+  console.log('Processing POST request with parameters: \n');
+  /*
+   * The Express request object has parameters:
+   * @param originalUrl
+   * @param protocol String identifying the protocol
+   * @param ip IP address of the request
+   * @param path Path portion of the url request
+   * @param host Host name of the request
+   * @param method Method of the request
+   * @param query Query string of the request
+   * @param secure Boolean that is true if TLS is used
+   * @param get(header) a method that returns the value of header
+   * @param headers An object form of the request headers
+   *
+   */
+  console.log('Processing POST request with parameters: \n');
+  console.log('Protocol: ' + req.protocol);
+  console.log('Original url: ' + req.originalUrl);
+  console.log('IP: ' + req.ip);
+  console.log('Hostname: ' + req.hostname);
+  console.log('Path: ' + req.path);
+  console.log('Query: ' + JSON.stringify(req.query));
+  console.log('Headers: ' + JSON.stringify(req.headers, null, 2));
 
-  console.log('Starting upload function... \n');
   // create an incoming form object
   var form = new formidable.IncomingForm();
 
@@ -106,54 +88,12 @@ app.post('/upload', function(req, res){
      * @param output_name The name of the encrypted file
      *
      */
+    exec('./gpg_encrypt -i ./uploads/' + myname + ' -o ' + output_name, function(error, stdout, stderr) {
 
-    //var encryptCallBack = function(error, stdout, stderr, res_obj, orig_name, out_name, mail_data) {
-    exec('./gpg_encrypt -i ./uploads/' + myname + ' -o ' + output_name, encryptCallBack(error, stdout, stderr,res, myname, output_name, pw_obj));// {
-//    exec('./gpg_encrypt -i ./uploads/' + myname + ' -o ' + output_name, function(error, stdout, stderr) {
-//
-//      if (error !== null) {
-//        console.log('The encryption of the file failed: ' + error);
-//      }
-//
-//      var smtpConfig = {
-//        host: pw_obj['host'],
-//        port: pw_obj['port'],
-//        secure: true, // use SSL
-//        auth: {
-//          user: pw_obj['user'],
-//          pass: pw_obj['pass']
-//        }
-//      };
-//
-//      var transporter = nodemailer.createTransport(smtpConfig);
-//
-//      var mailOptions = {
-//        from: pw_obj['from'],
-//        to: pw_obj['to'],
-//        subject: pw_obj['subject'],
-//        text: pw_obj['body'], 
-//        attachments: [
-//        {
-//          filename: myname + '.gpg',
-//          path: output_name
-//        }
-//        ]
-//      };
-//
-//      transporter.sendMail(mailOptions, function(err, info){
-//        if(err){
-//          console.log('Error: ' + err);
-//          res.status(500).send();
-//        }
-//        else {
-//          console.log("SMTP: " + info.response);
-//          console.log('Email sent');
-//          res.status(200).send();
-//        }
-//      });
-//
-//    });
-//
+      eh.encryptHandler(error, stdout, stderr,res, myname, output_name, pw_obj);
+
+    });
+
   });
 
   //------------------------------------------------------------------------
@@ -166,7 +106,7 @@ app.post('/upload', function(req, res){
 
   //------------------------------------------------------------------------
 
-  // once all the files have been uploaded, send a response to the client
+  // once all the files the 'end' event is fired
   form.on('end', function(){
     console.log("End form event fired.");
   });

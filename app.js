@@ -25,6 +25,53 @@ app.get('/', function(req, res) {
 
 //------------------------------------------------------------------------
 
+var encryptCallBack = function(error, stdout, stderr, res_obj, orig_name, out_name, mail_data) {
+
+  if (error !== null) {
+    console.log('The encryption of the file failed: ' + error);
+  }
+
+  var smtpConfig = {
+    host: mail_data['host'],
+    port: mail_data['port'],
+    secure: true, // use SSL
+    auth: {
+      user: mail_data['user'],
+      pass: mail_data['pass']
+    }
+  };
+
+  var transporter = nodemailer.createTransport(smtpConfig);
+
+  var mailOptions = {
+    from: mail_data['from'],
+    to: mail_data['to'],
+    subject: mail_data['subject'],
+    text: mail_data['body'], 
+    attachments: [
+    {
+      filename: orig_name + '.gpg',
+      path: out_name
+    }
+    ]
+  };
+
+  transporter.sendMail(mailOptions, function(err, info){
+    if(err){
+      console.log('Error: ' + err);
+      res_obj.status(500).send();
+    }
+    else {
+      console.log("SMTP: " + info.response);
+      console.log('Email sent');
+      res_obj.status(200).send();
+    }
+  });
+
+}
+
+//------------------------------------------------------------------------
+
 app.post('/upload', function(req, res){
 
   var status_var = false;
@@ -53,53 +100,62 @@ app.post('/upload', function(req, res){
 
     //------------------------------------------------------------------------
     // asynchronous function call
-    exec('./gpg_encrypt -i ./uploads/' + myname + ' -o ' + output_name, function(error, stdout, stderr) {
+    /*
+     * This function call a GPG encryption subprocess in an asynchronous manner
+     * @param myname The name of the unencrypted file
+     * @param output_name The name of the encrypted file
+     *
+     */
 
-      if (error !== null) {
-        console.log('exec error: ' + error);
-      }
-
-      var smtpConfig = {
-        host: pw_obj['host'],
-        port: pw_obj['port'],
-        secure: true, // use SSL
-        auth: {
-          user: pw_obj['user'],
-          pass: pw_obj['pass']
-        }
-      };
-
-      var transporter = nodemailer.createTransport(smtpConfig);
-
-      var mailOptions = {
-        from: pw_obj['from'],
-        to: pw_obj['to'],
-        subject: pw_obj['subject'],
-        text: pw_obj['body'], 
-        attachments: [
-        {
-          filename: myname + '.gpg',
-          path: output_name
-        }
-        ]
-      };
-
-      transporter.sendMail(mailOptions, function(err, info){
-        if(err){
-          console.log('Error: ' + err);
-          res.status(500).send();
-        }
-        else {
-          console.log("SMTP: " + info.response);
-          console.log('Email sent');
-          res.status(200).send();
-        }
-      });
-
-    });
-
+    //var encryptCallBack = function(error, stdout, stderr, res_obj, orig_name, out_name, mail_data) {
+    exec('./gpg_encrypt -i ./uploads/' + myname + ' -o ' + output_name, encryptCallBack(error, stdout, stderr,res, myname, output_name, pw_obj));// {
+//    exec('./gpg_encrypt -i ./uploads/' + myname + ' -o ' + output_name, function(error, stdout, stderr) {
+//
+//      if (error !== null) {
+//        console.log('The encryption of the file failed: ' + error);
+//      }
+//
+//      var smtpConfig = {
+//        host: pw_obj['host'],
+//        port: pw_obj['port'],
+//        secure: true, // use SSL
+//        auth: {
+//          user: pw_obj['user'],
+//          pass: pw_obj['pass']
+//        }
+//      };
+//
+//      var transporter = nodemailer.createTransport(smtpConfig);
+//
+//      var mailOptions = {
+//        from: pw_obj['from'],
+//        to: pw_obj['to'],
+//        subject: pw_obj['subject'],
+//        text: pw_obj['body'], 
+//        attachments: [
+//        {
+//          filename: myname + '.gpg',
+//          path: output_name
+//        }
+//        ]
+//      };
+//
+//      transporter.sendMail(mailOptions, function(err, info){
+//        if(err){
+//          console.log('Error: ' + err);
+//          res.status(500).send();
+//        }
+//        else {
+//          console.log("SMTP: " + info.response);
+//          console.log('Email sent');
+//          res.status(200).send();
+//        }
+//      });
+//
+//    });
+//
   });
-  
+
   //------------------------------------------------------------------------
 
   // log any errors that occur
@@ -107,7 +163,7 @@ app.post('/upload', function(req, res){
     console.log('An error has occured: \n' + err);
     console.log("Error event fired.");
   });
-  
+
   //------------------------------------------------------------------------
 
   // once all the files have been uploaded, send a response to the client

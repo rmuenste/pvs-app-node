@@ -90,6 +90,7 @@
                 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
                 <script src="javascripts/upload.js"></script>
+                <script src="javascripts/get_table_data.js"></script>
                 <div class="inner">
                   <h4>Nach dem Versenden</h4>
                   <p>Nachdem eine Datei abgeschickt wurde, wird sie gespeichert und auf dem Server archiviert.</p>
@@ -104,8 +105,12 @@
           <div class="container">
             <h3>Backup Übersicht</h3>
             <p>
+
             Ja hier kommt eine Übersicht der Backups hin
             </p>
+            <input type="button" onclick="createTable();" value="Create Table" />
+            <div id="box">
+            </div>
 
             <!--            <ul class="feature-icons">
               <li class="fa-code">Write all the code</li>

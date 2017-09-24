@@ -72,7 +72,7 @@ app.post('/upload', function(req, res){
   // rename it to it's original name
   form.on('file', function(field, file){
 
-    var myname = 'pvs-' + date + '.dat'; 
+    var myname = 'pvs-' + date + '.dat';
 
     fs.rename(file.path, path.join(form.uploadDir, myname));
 
@@ -88,7 +88,8 @@ app.post('/upload', function(req, res){
      * @param output_name The name of the encrypted file
      *
      */
-    exec('./gpg_encrypt -i ./uploads/' + myname + ' -o ' + output_name, function(error, stdout, stderr) {
+    //exec('./gpg_encrypt -i ./uploads/' + myname + ' -o ' + output_name, function(error, stdout, stderr) {
+    exec('python ./gpg_encrypt.py -i ./uploads/' + myname + ' -o ' + output_name + ' -d ' + pw_obj['gnupghome'] , function(error, stdout, stderr) {
 
       eh.encryptHandler(error, stdout, stderr,res, myname, output_name, pw_obj);
 
@@ -114,8 +115,16 @@ app.post('/upload', function(req, res){
   // parse the incoming request containing the form data
   form.parse(req);
 
-  console.log('Upload handler end \n');
+});
 
+//------------------------------------------------------------------------
+
+/*
+ * Express POST request handler for route /json
+ */
+app.get('/json', function(req, res){
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({"Date": "01.01.2017", "Albis-BU": "OK", "PA-BU": "OK"}, null, 3));
 });
 
 var server = app.listen(3000, function(){

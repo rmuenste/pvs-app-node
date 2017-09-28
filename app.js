@@ -124,7 +124,15 @@ app.post('/upload', function(req, res){
  */
 app.get('/json', function(req, res){
   res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify({"Date": "01.01.2017", "Albis-BU": "OK", "PA-BU": "OK"}, null, 3));
+  res.send(JSON.stringify([
+        {"Date": "07.01.2017", "Albis-BU": "OK", "PA-BU": "OK", "JD": "7"},
+        {"Date": "03.01.2017", "Albis-BU": "OK", "PA-BU": "OK", "JD": "3"},
+        {"Date": "06.01.2017", "Albis-BU": "OK", "PA-BU": "OK", "JD": "6"},
+        {"Date": "04.01.2017", "Albis-BU": "OK", "PA-BU": "OK", "JD": "4"},
+        {"Date": "01.01.2017", "Albis-BU": "OK", "PA-BU": "OK", "JD": "1"},
+        {"Date": "05.01.2017", "Albis-BU": "OK", "PA-BU": "OK", "JD": "5"},
+        {"Date": "02.01.2017", "Albis-BU": "OK", "PA-BU": "OK", "JD": "2"}
+  ], null, 3));
 });
 
 var server = app.listen(3000, function(){

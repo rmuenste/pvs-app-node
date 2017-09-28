@@ -1,0 +1,9 @@
+{
+  "Date":"31.12.2016",
+  "JD":"12345",
+  "jsDate":"date-string",
+  "Albis-BU":"OK",
+  "PA-BU":"OK",
+  "Albis-Path":"/home/rafa/code/node/node-mongo/logs/albis-log-31-12-16.log",
+  "PA-Path":"/home/rafa/code/node/node-mongo/logs/pa-log-31-12-16.log"
+}

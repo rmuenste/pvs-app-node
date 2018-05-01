@@ -13,7 +13,8 @@ def usage():
   print("Usage: configure [options]")
   print("Where options can be:")
   print("[-h, --help]: prints this message")
-  print("[-h, --help]: prints this message")
+  print("[-i, --input]: The name of the input file")
+  print("[-o, --output]: The name of the output file")
 ################
 
 try:
@@ -40,8 +41,6 @@ if not os.path.exists(home_dir):
   sys.exit("GNUPG home directory '%s' does not exist!" % home_dir)
 if not os.path.exists(input_file):
   sys.exit("Input file '%s' does not exist!" % input_file)
-
-#output_file = "./pvs_files/" + input_file + ".gpg"
 
 gpg = gnupg.GPG(gnupghome=home_dir)
 

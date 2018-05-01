@@ -3,15 +3,15 @@ var nodemailer = require('nodemailer');
 //------------------------------------------------------------------------
 
 /*
- * This function calls a GPG encryption subprocess in an asynchronous manner
+ * This function calls the nodemailer module to send an email with an attachment 
  * @param error Passed parameter
  * @param stdout Std output of the gpg process
  * @param stderr Std err output of the gpg process
+ * @param res_obj Response object from express
  * @param orig_name Name of the file that should encrypted
  * @param out_name Name of the encrypted file that should sent
  *                by email
  * @param mail_data Configuration object for mail server access
- * @param res_obj Response object from express
  *
  */
 var encryptHandler = function(error, stdout, stderr, res_obj, orig_name, out_name, mail_data) {

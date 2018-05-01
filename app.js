@@ -10,6 +10,8 @@ var fs = require('fs');
 
 var eh = require('./encrypthandler');
 
+var mht = require('./mailhandler_test');
+
 const exec = require('child_process').exec;
 const moment = require('moment');
 

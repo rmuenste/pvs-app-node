@@ -122,7 +122,7 @@ app.post('/upload', function(req, res){
 //------------------------------------------------------------------------
 
 /*
- * Express POST request handler for route /json
+ * Express GET request handler for route /json
  */
 app.get('/json', function(req, res){
   res.setHeader('Content-Type', 'application/json');

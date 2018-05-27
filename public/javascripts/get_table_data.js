@@ -1,3 +1,10 @@
+/*
+ * When the page loads this javascript is executed
+ * makes a GET request for the server route /json
+ *
+ * The server passes the json information in
+ * the variable 'data'
+ */
 $(function () {
   $.ajax({
     type: 'GET',

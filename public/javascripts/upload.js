@@ -1,3 +1,5 @@
+// Select the button upload-btn and
+// add a <onclick> event
 $('.upload-btn').on('click', function(){
   console.log('Clicked .upload-btn... \n');
   $('#upload-input').click();
@@ -5,6 +7,11 @@ $('.upload-btn').on('click', function(){
   $('.progress-bar').width('0%');
 });
 
+// Select the form with the id upload-input
+// and configure the <onchange> event
+// The <onchange> event is fired when the
+// value of the 'file' field of the input form
+// has changed.
 $('#upload-input').on('change', function(){
 
   var files = $(this).get(0).files;

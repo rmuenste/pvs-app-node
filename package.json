@@ -9,10 +9,12 @@
   "author": "RM",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "datejs": "^1.0.0-rc3",
     "express": "^4.15.4",
     "formidable": "^1.1.1",
     "moment": "^2.18.1",
+    "mysql": "^2.15.0",
     "nodemailer": "^4.1.0"
   },
   "repository": {

@@ -102,11 +102,46 @@
         <!-- Three -->
         <section id="three">
           <div class="container">
-            <h3>Backup Übersicht Test</h3>
-            <p>
-            Dies ist ein Test für die Übersicht der Backups
-            </p>
-            <div id="box">
+
+            <h3>Backup Übersicht</h3>
+
+            <div id="box" ng-app="app" ng-controller="FormController as formCtrl">
+
+              <form name="form" 
+                    ng-submit="formCtrl.submitForm()" novalidate>
+                <div>
+                  <label>Die letzten Backups anzeigen (max 7)</label> 
+                  <!-- get the users name -->
+                  <input type="number"
+                         name="age"
+                         ng-model="formCtrl.userAge"
+                         required />
+                  <!-- form validation -->
+                  <span style="color:#FF9900" ng-show="form.age.$dirty && form.age.$invalid">
+                    <span ng-show="form.age.$error.required">
+                      Sie muessen die Anzahl der Backups angeben
+                    </span>
+                    <span ng-show="form.age.$error.number">
+                      Sie muessen eine gueltige Zahl angeben
+                    </span>
+                  </span>
+                </div>
+                <!-- submit form -->
+              <input type="submit" name="submit" value="Submit" 
+                     ng-disabled="form.age.$invalid" />
+              </form>
+
+              <table id="basicTable">
+                <tr class="class1">
+                    <th class="myheader">Datum</th>
+                    <th class="myheader">Status</th>  
+                </tr>
+                <tr ng-repeat="x in resdata">
+                  <td>{{ x.TYear+"-"+("00"+x.TMonth).slice(-2)+("00"+x.TDay).slice(-2) | date : "dd.MM.y" }}</td>
+                  <td ng-class="{success:{{x.success}}===1, fail:{{x.success}}===0}"></td>  
+                </tr>
+              </table>
+
             </div>
             <!--
               <ul class="feature-icons">
@@ -171,7 +206,9 @@
     <script src="assets/js/util.js"></script>
     <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
     <script src="assets/js/main.js"></script>
-    <script src="javascripts/get_table_data.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascripts/table_controller.js"></script>
 
     <!-- Modal HTML -->
     <div id="myModal" class="modal fade">

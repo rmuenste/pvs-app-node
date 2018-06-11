@@ -2267,6 +2267,29 @@ table.alt tfoot {
   border-top: 0;
 }
 
+th.myheader{
+  background-color: #4acaa8;
+  color: #ffffff;
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+}
+
+td.success {
+  color: #4acaa8;
+}
+
+td.success:before {
+  content:"OK";
+}
+
+td.fail {
+  color: #4acaa8;
+}
+
+td.fail:before {
+  content:"FAIL";
+}
+
 /* Button */
 
 input[type="submit"],

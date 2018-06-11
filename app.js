@@ -4,6 +4,8 @@ var express = require('express');
 // create an express object
 var app = express();
 
+var bodyParser = require("body-parser");
+var mysql = require("mysql");
 var path = require('path');
 var formidable = require('formidable');
 var fs = require('fs');
@@ -15,7 +17,7 @@ var mht = require('./mailhandler_test');
 const exec = require('child_process').exec;
 const moment = require('moment');
 
-var pw_obj = JSON.parse(fs.readFileSync('hash.json','utf8'));
+//var pw_obj = JSON.parse(fs.readFileSync('hash.json','utf8'));
 
 var date = moment().format('DD-MM-YYYY');
 
@@ -25,6 +27,8 @@ console.log('Loaded modules... \n');
 console.log('Today: ' + date);
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'views/index.html'));
@@ -135,6 +139,34 @@ app.get('/json', function(req, res){
         {"Date": "05.01.2017", "Albis-BU": "OK", "PA-BU": "OK", "JD": "5"},
         {"Date": "02.01.2017", "Albis-BU": "OK", "PA-BU": "OK", "JD": "2"}
   ], null, 3));
+});
+
+/*
+ * Express post request handler for route /bu
+ */
+app.post('/bu', function(req, res){
+
+  console.log("JulianDate: " + req.body.juliandate);
+
+  var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "ticCerk9",
+    database: "praxis"
+  });
+
+  var sqlCommand ='SELECT * FROM Backups WHERE juliandate >= '
+                  +  req.body.juliandate + ';'; 
+
+  // This statement selects the all the customers 
+  // who live in the city Portland 
+  con.query(sqlCommand, function (err, result) {
+    if (err) throw err;
+    res.send(result);
+  });
+
+  con.end();
+
 });
 
 var server = app.listen(3000, function(){

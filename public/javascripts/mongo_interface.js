@@ -16,3 +16,23 @@ MongoClient.connect(url, opts, function(err, db) {
   db.close();
 
 });
+
+//var jd = require('./juliandate.js');
+//var util = require('util');
+//var mysql = require('mysql');
+//
+//var con = mysql.createConnection({
+//  host: "localhost",
+//  user: "root",
+//  password: "ticCerk9",
+//  database: "praxis"
+//});
+//
+//// This statement selects the all juliandates
+//// that are >= 2458271 
+//con.query('SELECT * FROM Backups WHERE juliandate >= 2458271;', function (err, result) {
+//  if (err) throw err;
+//  console.log('The solution is: ', result);
+//});
+//
+//con.end();

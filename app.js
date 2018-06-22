@@ -34,8 +34,9 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 
-//------------------------------------------------------------------------
-
+//========================================================================
+//            Implementation of Post handler for /upload
+//========================================================================
 /*
  * Express POST request handler for route /upload
  */
@@ -123,8 +124,9 @@ app.post('/upload', function(req, res){
 
 });
 
-//------------------------------------------------------------------------
-
+//========================================================================
+//             Implementation of GET handler for /json
+//========================================================================
 /*
  * Express GET request handler for route /json
  */
@@ -141,6 +143,9 @@ app.get('/json', function(req, res){
   ], null, 3));
 });
 
+//========================================================================
+//             Implementation of /bu route express handler
+//========================================================================
 /*
  * Express post request handler for route /bu
  */
@@ -169,6 +174,30 @@ app.post('/bu', function(req, res){
 
 });
 
+//========================================================================
+//       Implementation of /usercontact route express handler
+//========================================================================
+/*
+ * Express post request handler for route /usercontact
+ */
+app.post('/usercontact', function(req, res){
+
+  console.log("Request data: \n" + 
+              "User Name: " + req.body.userName + "\n" + 
+              "User Mail: " + req.body.userMail + "\n" + 
+              "User Subject: " + req.body.userSubject + "\n" + 
+              "User Message: " + req.body.userMSG);
+
+  //mht.mailFromUser
+  //
+  res.send("Thanks!");
+
+
+});
+
+//========================================================================
+//               Tell the server to listen on port 3000
+//========================================================================
 var server = app.listen(3000, function(){
   console.log('Server listening on port 3000')
 });

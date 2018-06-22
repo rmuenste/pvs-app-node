@@ -1780,19 +1780,25 @@ textarea {
   width: 100%;
 }
 
-input[type="text"]:invalid,
+input[type="email"].ng-valid,
+input[type="text"].ng-valid,
+textarea.ng-valid {
+  border-color: #4acaa8;
+}
+
+input[type="email"].ng-invalid,
+input[type="text"].ng-invalid,
+textarea.ng-invalid {
+  border-color: #e4e4e4;
+}
+ 
 input[type="password"]:invalid,
-input[type="email"]:invalid,
-select:invalid,
-textarea:invalid {
+select:invalid {
   box-shadow: none;
 }
 
-input[type="text"]:focus,
 input[type="password"]:focus,
-input[type="email"]:focus,
-select:focus,
-textarea:focus {
+select:focus {
   border-color: #4acaa8;
 }
 

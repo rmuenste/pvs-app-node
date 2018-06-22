@@ -35,3 +35,36 @@ app.controller("FormController", function($scope, $http) {
     };
 
 });
+
+app.controller('MailController', function($scope, $http) {
+
+  console.log("Mail controller created");
+
+  $scope.email = {
+    userName: '',
+    userMail: '',
+    userSubject: '',
+    userMSG: ''
+  };
+
+  this.submitForm = function(emailData) {
+      // do something useful with the form data here
+      console.log("Form data:" + JSON.stringify(emailData));
+
+      $http({
+        url: "/usercontact",
+        method: "POST",
+        data: emailData
+      }).then(function successCallback(response) {
+             // this callback will be called asynchronously
+             // when the response is available
+             console.log(response.statusText);
+        }, function errorCallback(response) {
+             // called asynchronously if an error occurs
+             // or server returns response with an error status.
+             console.log(response.statusText);
+        });
+   };
+
+});
+

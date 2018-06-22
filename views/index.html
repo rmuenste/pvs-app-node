@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
   </head>
-  <body>
+  <body ng-app="app">
 
     <!-- Header -->
     <section id="header">
@@ -105,7 +105,7 @@
 
             <h3>Backup Übersicht</h3>
 
-            <div id="box" ng-app="app" ng-controller="FormController as formCtrl">
+            <div id="box" ng-controller="FormController as formCtrl">
 
               <form name="form" 
                     ng-submit="formCtrl.submitForm()" novalidate>
@@ -149,7 +149,7 @@
                 <li class="fa-cubes">Stack small boxes</li>
                 <li class="fa-book">Read books and stuff</li>
                 <li class="fa-coffee">Drink much coffee</li>
-                <li class="fa-bolt">Lightning bolt</li>
+                          <li class="fa-bolt">Lightning bolt</li>
                 <li class="fa-users">Shadow clone technique</li>
               </ul>
             -->
@@ -159,25 +159,26 @@
 
         <!-- Four -->
         <section id="four">
-          <div class="container">
-            <h3>Kontakt Aufnehmen</h3>
-            <p>Ne... Funktioniert nicht ;-) .</p>
-            <form method="post" action="#">
+          <div class="container" ng-controller="MailController as mailCtrl">
+            <h3>Kontakt</h3>
+            <p>Schreiben Sie dem Adminstrator eine Nachricht:</p>
+            <form name="mailForm" ng-submit="mailCtrl.submitForm(email)" novalidate>
               <div class="row uniform">
-                <div class="6u 12u(xsmall)"><input type="text" name="name" id="name" placeholder="Name" /></div>
-                <div class="6u 12u(xsmall)"><input type="email" name="email" id="email" placeholder="Email" /></div>
+                <div class="6u 12u(xsmall)"><input type="text" name="name" id="name" ng-model="email.userName" placeholder="Name" required /></div>
+                <div class="6u 12u(xsmall)"><input type="email" name="email" id="email" ng-model="email.userMail" placeholder="Email" required /></div>
               </div>
               <div class="row uniform">
-                <div class="12u"><input type="text" name="subject" id="subject" placeholder="Subject" /></div>
+                <div class="12u"><input type="text" name="subject" id="subject" ng-model="email.userSubject" placeholder="Subject" required/></div>
               </div>
               <div class="row uniform">
-                <div class="12u"><textarea name="message" id="message" placeholder="Message" rows="6"></textarea></div>
+                <div class="12u"><textarea name="message" id="message" ng-model="email.userMSG" rows="6" placeholder="Message"required></textarea></div>
+              </div>
+              <div class="row uniform">
               </div>
               <div class="row uniform">
                 <div class="12u">
                   <ul class="actions">
-                    <li><input type="submit" class="special" value="Send Message" /></li>
-                    <li><input type="reset" value="Reset Form" /></li>
+                    <li><input type="submit" class="special" value="Send Message" ng-disabled="mailForm.$invalid" /></li>
                   </ul>
                 </div>
               </div>

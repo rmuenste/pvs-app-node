@@ -110,25 +110,34 @@
               <form name="form" 
                     ng-submit="formCtrl.submitForm()" novalidate>
                 <div>
-                  <label>Die letzten Backups anzeigen (max 7)</label> 
+                  <label>Die letzten Backups anzeigen (min 1, max 40)</label> 
                   <!-- get the users name -->
                   <input type="number"
-                         name="age"
-                         ng-model="formCtrl.userAge"
+                         name="days"
+                         ng-model="formCtrl.showDays"
+                         min="0"
+                         max="40"
                          required />
+                    <br />
+                    <tt>value = {{formCtrl.showDays}}</tt><br/>
+                    <tt>form.input.$valid = {{form.days.$valid}}</tt><br/>
+                    <tt>form.input.$error = {{form.days.$error}}</tt><br/>
+                    <tt>form.$valid = {{form.$valid}}</tt><br/>
+                    <tt>form.$error.required = {{!!form.$error.required}}</tt><br/>
                   <!-- form validation -->
-                  <span style="color:#FF9900" ng-show="form.age.$dirty && form.age.$invalid">
-                    <span ng-show="form.age.$error.required">
+                  <span style="color:#FF9900" ng-show="form.days.$dirty && form.days.$invalid">
+                    <span ng-show="form.days.$error.required">
                       Sie muessen die Anzahl der Backups angeben
                     </span>
-                    <span ng-show="form.age.$error.number">
+                    <span ng-show="form.days.$error.number">
                       Sie muessen eine gueltige Zahl angeben
                     </span>
                   </span>
                 </div>
                 <!-- submit form -->
-              <input type="submit" name="submit" value="Submit" 
-                     ng-disabled="form.age.$invalid" />
+                <br />
+              <input type="submit" name="submit" class="special" value="Anzeigen"
+                     ng-disabled="form.$invalid" />
               </form>
 
               <table id="basicTable">
@@ -138,7 +147,7 @@
                 </tr>
                 <tr ng-repeat="x in resdata">
                   <td>{{ x.TYear+"-"+("00"+x.TMonth).slice(-2)+("00"+x.TDay).slice(-2) | date : "dd.MM.y" }}</td>
-                  <td ng-class="{success:{{x.success}}===1, fail:{{x.success}}===0}"></td>  
+                  <td ng-class="{success:{{x.asuccess}}===1, fail:{{x.asuccess}}===0}"></td>  
                 </tr>
               </table>
 
@@ -208,7 +217,7 @@
     <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
     <script src="assets/js/main.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="javascripts/table_controller.js"></script>
 
     <!-- Modal HTML -->

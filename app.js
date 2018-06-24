@@ -17,7 +17,7 @@ var mht = require('./mailhandler_test');
 const exec = require('child_process').exec;
 const moment = require('moment');
 
-//var pw_obj = JSON.parse(fs.readFileSync('hash.json','utf8'));
+var pw_obj = JSON.parse(fs.readFileSync('hash.json','utf8'));
 
 var date = moment().format('DD-MM-YYYY');
 
@@ -160,7 +160,7 @@ app.post('/bu', function(req, res){
     database: "praxis"
   });
 
-  var sqlCommand ='SELECT * FROM Backups WHERE juliandate >= '
+  var sqlCommand ='SELECT * FROM Backups WHERE juliandate > '
                   +  req.body.juliandate + ';'; 
 
   // This statement selects the all the customers 
@@ -188,10 +188,14 @@ app.post('/usercontact', function(req, res){
               "User Subject: " + req.body.userSubject + "\n" + 
               "User Message: " + req.body.userMSG);
 
-  //mht.mailFromUser
-  //
-  res.send("Thanks!");
-
+  user_data = {
+  };
+  user_data.userName = req.body.userName;
+  user_data.userSubject = req.body.userSubject;
+  user_data.userMSG = req.body.userMSG;
+  user_data.userMail = req.body.userMail;
+  
+  mht.mailFromUser(res, user_data, pw_obj); 
 
 });
 

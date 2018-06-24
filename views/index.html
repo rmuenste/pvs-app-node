@@ -115,24 +115,23 @@
                   <input type="number"
                          name="days"
                          ng-model="formCtrl.showDays"
-                         min="0"
+                         min="1"
                          max="40"
                          required />
                     <br />
-                    <tt>value = {{formCtrl.showDays}}</tt><br/>
-                    <tt>form.input.$valid = {{form.days.$valid}}</tt><br/>
-                    <tt>form.input.$error = {{form.days.$error}}</tt><br/>
-                    <tt>form.$valid = {{form.$valid}}</tt><br/>
-                    <tt>form.$error.required = {{!!form.$error.required}}</tt><br/>
                   <!-- form validation -->
-                  <span style="color:#FF9900" ng-show="form.days.$dirty && form.days.$invalid">
-                    <span ng-show="form.days.$error.required">
+                  <div class="alert alert-danger" ng-show="form.days.$error.required">
                       Sie muessen die Anzahl der Backups angeben
-                    </span>
-                    <span ng-show="form.days.$error.number">
-                      Sie muessen eine gueltige Zahl angeben
-                    </span>
-                  </span>
+                  </div>
+                  <div class="alert alert-danger" ng-show="form.days.$error.number">
+                      Sie müssen eine gültige Zahl angeben
+                  </div>
+                  <div class="alert alert-danger" ng-show="form.days.$error.min">
+                    Die Zahl muss mindestens 1 sein.
+                  </div>
+                  <div class="alert alert-danger" ng-show="form.days.$error.max">
+                    Die Zahl darf maximal 40 sein.
+                  </div>
                 </div>
                 <!-- submit form -->
                 <br />

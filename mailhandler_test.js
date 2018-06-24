@@ -74,7 +74,7 @@ var mailHandler_test = function(error, stdout, stderr, res_obj, orig_name, out_n
  * @param mail_data Configuration object for mail server access
  *
  */
-var mailFromUser = function(error, res_obj, user_data, mail_data) {
+var mailFromUser = function(res_obj, user_data, mail_data) {
 
   var smtpConfig = {
     host: mail_data['host'],
